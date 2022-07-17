@@ -25,31 +25,44 @@ function buildNewTodo(value) {
     const listItem = editButton.parentElement;
     const span = listItem.querySelector("span");
 
-    const editDivID= document.getElementById(`${listItem.id}div`);
+    const editDivID = document.getElementById(`${listItem.id}div`);
 
-    if(!editDivID) {
-        
-    const editDiv = document.createElement("div");
-    editDiv.id=listItem.id+"div";
-    const input = document.createElement("input");
-    const saveButton = document.createElement("button");
-    saveButton.textContent = "Save";
+    if (!editDivID) {
+      const editDiv = document.createElement("div");
+      editDiv.id = listItem.id + "div";
+      const input = document.createElement("input");
+      const saveButton = document.createElement("button");
+      saveButton.textContent = "Save";
 
-    editDiv.appendChild(input);
-    editDiv.appendChild(saveButton);
+      editDiv.appendChild(input);
+      editDiv.appendChild(saveButton);
 
-    listItem.appendChild(editDiv);
-    saveButton.addEventListener("click", () => {
-      const newValue = input.value;
-      span.textContent = newValue;
-       
-      editDiv.remove();
-    });}
-    else{ editDivID.remove();}
+      listItem.appendChild(editDiv);
+      saveButton.addEventListener("click", () => {
+        const newValue = input.value;
+        span.textContent = newValue;
+
+        editDiv.remove();
+      });
+    } else {
+      editDivID.remove();
+    }
   });
   parentLi.append(todoSpanTitle, deleteButton, editButton);
   todoList.append(parentLi);
 }
+
+const searchFunction = () => {
+  const todoList = document.querySelector("#todo-list ul");
+  const searchText = document.querySelector("#inputSearch").value;
+  const children = todoList.children;
+  Array.from(children).forEach((elem) => {
+    elem.style.display = "block";
+    if (!elem.querySelector("span").innerText.startsWith(searchText)) {
+      elem.style.display = "none";
+    }
+  });
+};
 
 function deleteTodo(randomId) {
   const todoItem1 = document.getElementById(`${randomId}`);
